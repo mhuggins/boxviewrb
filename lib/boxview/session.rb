@@ -1,82 +1,27 @@
 module BoxView
   class Session
 
-    @path = '/sessions'
-
-    @@expiration_date = nil
-
-    @@duration = nil
-
-    @@retry_after = nil
-
-    @@is_downloadable = false
+    PATH = '/sessions'
 
     class << self
 
-      ### BEGIN Getters AND Setters ###
-
-      # Description:
-      # =>
-      # Required Params:
-      # =>
-      def duration=(duration)
-        @@duration = duration
-      end
+      attr_accessor :expiration_date, :duration, :retry_after, :is_downloadable
 
       # Description:
       # =>
       # No Params!
       def duration
-        raise BoxView::Errors::DurationNotFound if @@duration.nil?
-        @@duration
-      end
-
-      # Description:
-      # =>
-      # Required Params:
-      # =>
-      def expiration_date=(expiration_date)
-        @@expiration_date = expiration_date
+        raise BoxView::Errors::DurationNotFound if @duration.nil?
+        @duration
       end
 
       # Description:
       # =>
       # No Params!
       def expiration_date
-        raise BoxView::Errors::ExpirationDateNotFound if @@expiration_date.nil?
-        @@expiration_date
+        raise BoxView::Errors::ExpirationDateNotFound if @expiration_date.nil?
+        @expiration_date
       end
-
-      # Description:
-      # => The setter method for the retry after time while the session is being generated.
-      # Required Params:
-      # => retry_after
-      def retry_after=(retry_after)
-        @@retry_after = retry_after
-      end
-
-      # Description:
-      # => The getter method for the retry after time while the session is being generated.
-      # No Params!
-      def retry_after
-        @@retry_after
-      end
-
-      # Description:
-      # =>
-      # No Params!
-      def is_downloadable=(is_downloadable)
-        @@is_downloadable
-      end
-
-      # Description:
-      # =>
-      # No Params!
-      def is_downloadable
-        @@is_downloadable
-      end
-
-      ### END Getters AND Setters ###
 
       ### BEGIN Session HTTP Request ###
 
@@ -102,7 +47,7 @@ module BoxView
       # =>
       # No Params!
       def session_path
-        "#{BoxView::base_url}#{BoxView::base_path}#{@path}"
+        "#{BoxView.base_url}#{PATH}"
       end
 
       # Description:
@@ -179,12 +124,12 @@ module BoxView
         data = {}
         data[:document_id] = BoxView.document_id
         data[:is_downloadable] = is_downloadable if is_downloadable
-        if !@@duration.nil? && @@expiration_date.nil? # duration
-          data[:duration] = @@duration
-        elsif @@duration.nil? && !@@expiration_date.nil? # expiration
-          data[:expires_at] = @@expiration_date
-        elsif !@@duration.nil? && !@@expiration_date.nil? # both, use expiration date
-          data[:expires_at] = @@expiration_date
+        if !@duration.nil? && @expiration_date.nil? # duration
+          data[:duration] = duration
+        elsif @duration.nil? && !@expiration_date.nil? # expiration
+          data[:expires_at] = expiration_date
+        elsif !@duration.nil? && !@expiration_date.nil? # both, use expiration date
+          data[:expires_at] = expiration_date
         else
           # Default will be used
         end

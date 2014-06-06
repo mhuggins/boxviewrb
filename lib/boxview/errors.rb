@@ -1,15 +1,8 @@
 module BoxView
   class Errors < StandardError
 
-    @error = nil
-
-    def error
-      @error
-    end
-
     def initialize(message, error = nil)
       # super message
-      @error = error
       if error.nil?
         super message
       else

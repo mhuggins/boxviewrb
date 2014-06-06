@@ -4,38 +4,13 @@ module BoxView
     # ToDo: Investigate https://github.com/jwagener/httmultiparty
     # For multi part upload support
 
-    @@url = nil
-
-    @@name = nil
-
-    @@non_svg = false
-
-    @@type = nil # ZIP or PDF
-
-    @@width = nil
-
-    @@height = nil
-
-    @@retry_after = nil
-
-    # @@filepath
-
-    @path = '/documents'
-
+    PATH = '/documents'
     ZIP = 'zip' # Constant for generating a zip of assets of a document
     PDF = 'pdf' # Constant for generating a pdf of a document
 
     class << self
 
-      ### BEGIN Getters AND Setters ###
-
-      # Description:
-      # => The setter method for the url of a box view compatible file. Look at supported_mimetypes.
-      # Required Params:
-      # => URL
-      def url=(url)
-        @@url = url
-      end
+      attr_accessor :url, :name, :non_svg, :type, :width, :height, :retry_after#, :filepath
 
       # Description:
       # => The getter method for the url of a box view compatible file. Look at supported_mimetypes.
@@ -43,38 +18,8 @@ module BoxView
       # Note:
       # => Raises an error if the url is nil.
       def url
-        raise BoxView::Errors::UrlNotFound if @@url.nil?
-        @@url
-      end
-
-      # Description:
-      # => The setter method for the name of the document.
-      # Required Params:
-      # => Name
-      def name=(name)
-        @@name = name
-      end
-
-      # Description:
-      # => The getter method for the name of the document.
-      # No Params!
-      def name
-        @@name
-      end
-
-      # Description:
-      # => The setter method for whether or not to generate an svg. (some browsers do not support it)
-      # Required Params:
-      # => non_svg
-      def non_svg=(non_svg)
-        @@non_svg
-      end
-
-      # Description:
-      # => The getter method for whether or not to generate an svg. (some browsers do not support it)
-      # No Params!
-      def non_svg
-        @@non_svg
+        raise BoxView::Errors::UrlNotFound if @url.nil?
+        @url
       end
 
       # Description:
@@ -85,70 +30,8 @@ module BoxView
       # => This method only accepts pdf or zip as types.
       def type=(type)
         raise BoxView::Errors::TypeNotFound if ![ZIP, PDF].include? type.downcase
-        @@type = type
+        @type = type
       end
-
-      # Description:
-      # => The getter method for the type of asset to be downloaded.
-      # No Params!
-      def type
-        @@type
-      end
-
-      # Description:
-      # => The setter method for the width of the thumbnail to be generated.
-      # Required Params:
-      # => width
-      def width=(width)
-        @@width = width
-      end
-
-      # Description:
-      # => The getter method for the width of the thumbnail to be generated.
-      # No Params!
-      def width
-        @@width
-      end
-
-      # Description:
-      # => The setter method for the height of the thumbnail to be generated.
-      # Required Params:
-      # => height
-      def height=(height)
-        @@height = height
-      end
-
-      # Description:
-      # => The getter method for the height of the thumbnail to be generated.
-      # No Params!
-      def height
-        @@height
-      end
-
-      # Description:
-      # => The setter method for the retry after time while thumbnails are being generated.
-      # Required Params:
-      # => retry_after
-      def retry_after=(retry_after)
-        @@retry_after = retry_after
-      end
-
-      # Description:
-      # => The getter method for the retry after time while thumbnails are being generated.
-      # No Params!
-      def retry_after
-        @@retry_after
-      end
-
-      # def filepath=(filepath)
-      #   @@filepath = filepath
-      # end
-
-      # def filepath
-      #   @@filepath
-      # end
-
-      ### END Getters AND Setters ###
 
       #########################################################
 
@@ -259,9 +142,9 @@ module BoxView
       # =>
       # No Params!
       # def multipart_headers
-      #   raise BoxView::Errors::ApiKeyNotFound if @@api_key.nil?
+      #   raise BoxView::Errors::ApiKeyNotFound if BoxView.api_key.nil?
       #   {
-      #     'Authorization' => "Token #{@@api_key}",
+      #     'Authorization' => "Token #{BoxView.api_key}",
       #     'Content-type' => 'multipart/form-data'
       #   }
       # end
@@ -270,14 +153,14 @@ module BoxView
       # =>
       # No Params!
       def document_path
-        "#{BoxView::base_url}#{BoxView::base_path}#{@path}"
+        "#{BoxView.base_url}#{PATH}"
       end
 
       # Description:
       # =>
       # No Params!
       # def multipart_path
-      #   "#{@multipart_path}#{BoxView::base_path}#{@path}"
+      #   "#{@multipart_path}#{BoxView::BASE_PATH}#{PATH}"
       # end
 
       # Description:
@@ -307,8 +190,8 @@ module BoxView
       # => Type defaults to zip if not defined.
       # => A Document ID must be defined.
       def asset_url
-        type = if @@type then @@type else ZIP end # Defaults to ZIP
-        "#{BoxView.base_uri}#{BoxView.base_path}#{@path}/#{BoxView.document_id}/content.#{type}"
+        type = if @type then @type else ZIP end # Defaults to ZIP
+        "#{BoxView.base_url}#{PATH}/#{BoxView.document_id}/content.#{type}"
       end
 
       # Description: Params for retrieving a thumbnail of a certain size
@@ -334,7 +217,7 @@ module BoxView
       # =>
       # No Params!
       def thumbnail_path
-        "#{@path}/#{BoxView.document_id}/thumbnail#{thumbnail_params}"
+        "#{PATH}/#{BoxView.document_id}/thumbnail#{thumbnail_params}"
       end
 
       private
