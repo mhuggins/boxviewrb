@@ -20,12 +20,9 @@ Or install it yourself as:
 
 ### Configuration
 
-All that needs to be done to use BoxView is to define your api key. To get your own API Key, visit Box.com and get a developer account. Then create a new Box View application. Scroll to the bottom of the application settings page to find your api key.
+Defining an api key is the only required configuration. To get your own API Key, visit Box.com and get a developer account. Then create a new Box View application. Scroll to the bottom of the application settings page to find your api key.
 
 ```ruby
-BoxView.api_key = '#{MY_API_KEY}'
-
-# A real world example:
 BoxView.api_key = 'gyheecmm6ckk8jutlowlzfh2tbg72kck'
 ```
 
@@ -129,6 +126,8 @@ BoxView::Document.assets
 #### Create
 
 Generating a document will give you a document id. Next you can create a session using this id. The session will begin the conversion process of the document. When Box is done converting your document it will be available to download through the assets method or the viewer url convenience method. A session expires after a set amount of time. You can set a duration or an expiration date for the session. If left blank, the session is set by box by default to expire in 60 minutes. Duration is marked in minutes. Expiration date is a timestamp. The variable is_downloadable refers to whether or not the box viewer will display a download button or not.
+
+After successfully generating a session, the session id will be available. You can either parse it out of the response that is returned, or just call 'BoxView.session_id'.
 
 ```ruby
 BoxView.document_id = '937778a1a54b4337a5351a78f7188a24'
