@@ -145,7 +145,7 @@ module BoxView
       ### BEGIN Document HTTP Requests ###
 
       # Description:
-      # => Creates an HTML ready document based on the specified attributes.
+      # => Sends a document url (and other metadata) for Box to download
       # Required Paramaters:
       # => URL: Url of the file to convert. (.pdf, .doc, .docx, .ppt, and .pptx)
       # Optional Paramaters:
@@ -171,11 +171,16 @@ module BoxView
       # No Params!
       def update(options = {})
         name options[:name] if options[:name]
-        response = BoxView.put document_path, body: {'name' => @@name}.to_json, headers: BoxView.headers
+        BoxView.document_id = options[:document_id] if options[:document_id]
+        response = BoxView.put document_path, body: {name: name}.to_json, headers: BoxView.headers
         update_response_handler response
         return response
       end
 
+
+      # Description:
+      # =>
+      # No Params!
       # TODO: Implement
       # def multipart
       #   BoxView.base_uri 'https://upload.view-api.box.com'
@@ -196,7 +201,8 @@ module BoxView
       # Description:
       # =>
       # No Params!
-      def show
+      def show(options = {})
+        BoxView.document_id = options[:document_id] if options[:document_id]
         response = BoxView.get "#{document_path}/#{BoxView.document_id}", headers: BoxView.headers
         show_response_handler response
         return response
@@ -218,6 +224,7 @@ module BoxView
       # =>
       # No Params!
       def assets(options = {})
+        BoxView.document_id = options[:document_id] if options[:document_id]
         type options[:type] if options[:type]
         response = BoxView.get asset_url, headers: BoxView.headers
         asset_response_handler response
@@ -227,8 +234,10 @@ module BoxView
       # Description:
       # =>
       # No Params!
-      def thumbnail
-        puts thumbnail_url, BoxView.headers
+      def thumbnail(options = {})
+        BoxView.document_id = options[:document_id] if options[:document_id]
+        width options[:width] if options[:width]
+        height options[:height] if options[:height]
         response = BoxView.get thumbnail_url, headers: BoxView.headers
         thumbnail_response_handler response
         return response
@@ -239,13 +248,13 @@ module BoxView
       # Description:
       # =>
       # No Params!
-      def multipart_headers
-        raise BoxView::Errors::ApiKeyNotFound if @@api_key.nil?
-        {
-          'Authorization' => "Token #{@@api_key}",
-          'Content-type' => 'multipart/form-data'
-        }
-      end
+      # def multipart_headers
+      #   raise BoxView::Errors::ApiKeyNotFound if @@api_key.nil?
+      #   {
+      #     'Authorization' => "Token #{@@api_key}",
+      #     'Content-type' => 'multipart/form-data'
+      #   }
+      # end
 
       # Description:
       # =>
@@ -257,9 +266,9 @@ module BoxView
       # Description:
       # =>
       # No Params!
-      def multipart_path
-        "#{@multipart_path}#{BoxView::base_path}#{@path}"
-      end
+      # def multipart_path
+      #   "#{@multipart_path}#{BoxView::base_path}#{@path}"
+      # end
 
       # Description:
       # => A convenience method that contains all of the supported mimetypes of Box View.
@@ -299,16 +308,16 @@ module BoxView
       # No Params!
       # Note: Height and Width MUST be defined.
       def thumbnail_params
-        raise BoxView::Errors::DimensionsNotFound if @@width.nil? || @@height.nil?
-        "?width=#{@@width}&height=#{@@height}"
+        raise BoxView::Errors::DimensionsNotFound if width.nil? || height.nil?
+        "?width=#{width}&height=#{height}"
       end
 
       # Description:
       # =>
       # No Params!
       def dimensions
-        raise BoxView::Errors::DimensionsNotFound if @@width.nil? || @@height.nil?
-        "#{@@width}x#{@@height}"
+        raise BoxView::Errors::DimensionsNotFound if width.nil? || height.nil?
+        "#{width}x#{height}"
       end
 
       # Description:
@@ -347,6 +356,11 @@ module BoxView
       # Required Params:
       # =>
       def delete_response_handler(response)
+        case response.code
+        when 200
+        else
+          # raise
+        end
       end
 
       # Description:
@@ -393,7 +407,7 @@ module BoxView
         if (200..202).include? response.code
           parsed = JSON.parse response.body
           document_id = parsed["id"]
-          BoxView.document_id document_id
+          BoxView.document_id = document_id
         else
           raise BoxView::Errors::DocumentIdNotGenerated.new(response)
         end
@@ -407,7 +421,7 @@ module BoxView
         if (200..202).include? response.code
           parsed = JSON.parse response.body
           document_id = parsed["id"]
-          BoxView.document_id document_id
+          BoxView.document_id = document_id
         else
           raise BoxView::Errors::DocumentNotUpdated.new(response)
         end
@@ -418,10 +432,10 @@ module BoxView
       # No Params!
       def json_data
         data = {}
-        data['url'] = @@url
-        data['thumbnails'] = dimensions if width && height
-        data['name'] = name if name
-        data['non_svg'] = non_svg if non_svg
+        data[:url] = url
+        data[:thumbnails] = dimensions if width && height
+        data[:name] = name if name
+        data[:non_svg] = non_svg if non_svg
         return data.to_json
       end
 

@@ -7,6 +7,10 @@ module BoxView
 
     @@duration = nil
 
+    @@retry_after = nil
+
+    @@is_downloadable = false
+
     class << self
 
       ### BEGIN Getters AND Setters ###
@@ -58,21 +62,35 @@ module BoxView
         @@retry_after
       end
 
+      # Description:
+      # =>
+      # No Params!
+      def is_downloadable=(is_downloadable)
+        @@is_downloadable
+      end
+
+      # Description:
+      # =>
+      # No Params!
+      def is_downloadable
+        @@is_downloadable
+      end
+
       ### END Getters AND Setters ###
 
       ### BEGIN Session HTTP Request ###
 
       # Description:
-      # => Method that creates a session, uses HTTParty for network calls
-      # Required Params:
-      # =>
+      # => Creates a session for viewing the HTML ready document
       # Note:
+      # => No Required Params!
       # => params can be defined elsewhere.
       # => document id must be defined.
       def create(options = {})
-        BoxView.document_id options[:document_id] if options[:document_id]
+        BoxView.document_id = options[:document_id] if options[:document_id]
         duration options[:duration] if options[:duration]
         expiration_date options[:expiration_date] if options[:expiration_date]
+        is_downloadable options[:is_downloadable] if options[:is_downloadable]
         response = BoxView.post session_path, body: json_data, headers: BoxView.headers
         response_handler response
         return response
@@ -144,7 +162,7 @@ module BoxView
         when 201 # Done converting
           parsed = JSON.parse response.body
           session_id = parsed["id"]
-          BoxView.session_id session_id
+          BoxView.session_id = session_id
         when 202 # Session not ready yet
           retry_after response['Retry-After']
         when 400 # An error occurred while converting the document or the document does not exist
@@ -159,13 +177,14 @@ module BoxView
       # No Params!
       def json_data # Does a duration or an expiration date need to exist?
         data = {}
-        data["document_id"] = BoxView.document_id
+        data[:document_id] = BoxView.document_id
+        data[:is_downloadable] = is_downloadable if is_downloadable
         if !@@duration.nil? && @@expiration_date.nil? # duration
-          data["duration"] = @@duration
+          data[:duration] = @@duration
         elsif @@duration.nil? && !@@expiration_date.nil? # expiration
-          data["expiration_date"] = @@expiration_date
+          data[:expires_at] = @@expiration_date
         elsif !@@duration.nil? && !@@expiration_date.nil? # both, use expiration date
-          data["expiration_date"] = @@expiration_date
+          data[:expires_at] = @@expiration_date
         else
           # Default will be used
         end
