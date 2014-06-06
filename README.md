@@ -252,9 +252,9 @@ BoxView::Document.supported_file_extensions
 <a name="author"/>
 ## Author
 
-Vincent Taverna, vinny@getlua.com, vinnymac.github.io
+Vincent Taverna, vinny@getlua.com, (http://vinnymac.github.io)[vinnymac.github.io]
 
 <a name="license"/>
 ## License
 
-BoxViewRb is available under the MIT license. See the LICENSE file for more information.
+BoxViewRb is available under the MIT license. See the (LICENSE.txt)[LICENSE] file for more information.
