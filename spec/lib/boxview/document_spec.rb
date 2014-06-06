@@ -50,13 +50,16 @@ describe BoxView::Document, '#create' do
   xit 'should raise when receiving a 500' do
   end
 
-  it 'should raise when receiving a 401 Unauthorized' do
+  it 'should raise when receiving a bad api key' do
     BoxView.api_key = 'somesortofbadapikey'
     BoxView::Document.url = 'http://imgur.com/cats.jpeg'
     expect{BoxView::Document.create}.to raise_error(BoxView::Errors::DocumentIdNotGenerated)
   end
 
-  xit 'should return the response when receiving a 200' do
-    # expect(BoxView::Document.create).to receive(:post)
+  it 'should return the response when sent a good request (200..202)' do
+    BoxView.api_key = API_KEY
+    BoxView::Document.url = 'http://i.imgur.com/4RZkFbE.png'
+    response = BoxView::Document.create
+    expect(200..202).to cover(response.code)
   end
 end
