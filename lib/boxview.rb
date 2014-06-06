@@ -6,6 +6,7 @@ require_relative 'boxview/errors'
 
 module BoxView
   include HTTParty
+  # include HTTMultiParty
 
   base_uri 'https://view-api.box.com'
 

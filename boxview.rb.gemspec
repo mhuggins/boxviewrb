@@ -24,4 +24,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
   spec.add_runtime_dependency 'httparty', '~> 0.13.1', '>= 0.12.0'
+  # spec.add_runtime_dependency 'httmultiparty', '~> 0.3.14'
 end

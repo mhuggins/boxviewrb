@@ -18,6 +18,8 @@ module BoxView
 
     @@retry_after = nil
 
+    # @@filepath
+
     @path = '/documents'
 
     ZIP = 'zip' # Constant for generating a zip of assets of a document
@@ -137,6 +139,14 @@ module BoxView
       def retry_after
         @@retry_after
       end
+
+      # def filepath=(filepath)
+      #   @@filepath = filepath
+      # end
+
+      # def filepath
+      #   @@filepath
+      # end
 
       ### END Getters AND Setters ###
 
@@ -438,6 +448,15 @@ module BoxView
         data[:non_svg] = non_svg if non_svg
         return data.to_json
       end
+
+      # def multipart_json_data
+      #   data = {}
+      #   data[:thumbnails] = dimensions if width && height
+      #   data[:name] = name if name
+      #   data[:non_svg] = non_svg if non_svg
+      #   data[:file] = File.new(filepath, 'r') if filepath
+      #   return data.to_json
+      # end
 
     end
   end
