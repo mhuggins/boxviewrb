@@ -24,6 +24,8 @@ A BoxView API wrapper. Built using the power of HTTParty to communicate with the
         * [Supported MIMETypes](#supported_mimetypes)
         * [Supported File Extensions](#supported_file_extensions)
 * [Contributing](#contributing)
+* [Author](#author)
+* [License](#license)
 
 <a name="installation"/>
 ## Installation
@@ -246,3 +248,13 @@ BoxView::Document.supported_file_extensions
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
+<a name="author"/>
+## Author
+
+Vincent Taverna, vinny@getlua.com, vinnymac.github.io
+
+<a name="license"/>
+## License
+
+BoxViewRb is available under the MIT license. See the LICENSE file for more information.
