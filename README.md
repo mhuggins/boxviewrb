@@ -1,6 +1,6 @@
 # BoxViewRb
 
-Seeing as it has been years without any support for the crocodoc gem or any of the alternative gems out their I decided to write a new wrapper for the BoxView API. The BoxView API has had some small changes, and is better documented than it used to be. You can learn more at the developer page: http://developers.box.com/view/. Note this product and API are still in beta, and likely to change in the future. BoxViewRb works with all available requests (except multipart uploads) that are documented by BoxView at the time of writing.
+A BoxView API wrapper. Built using the power of HTTParty to communicate with the BoxView API. The BoxView API has added some new features and improved documentation, this lib takes care of all of those new additions for you. You can learn more at the developer page: http://developers.box.com/view/. Note this product and API are still in beta, and likely to change in the future. BoxViewRb works with all available requests (except multipart uploads) that are documented by BoxView at the time of writing.
 
 ##### Table of Contents
 * [Installation](#installation)
