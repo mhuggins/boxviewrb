@@ -166,7 +166,7 @@ BoxView::Document.assets
 
 Generating a document will give you a document id. Next you can create a session using this id. The session will begin the conversion process of the document. When Box is done converting your document it will be available to download through the assets method or the viewer url convenience method. A session expires after a set amount of time. You can set a duration or an expiration date for the session. If left blank, the session is set by box by default to expire in 60 minutes. Duration is marked in minutes. Expiration date is a timestamp. The variable is_downloadable refers to whether or not the box viewer will display a download button or not.
 
-After successfully generating a session, the session id will be available. You can either parse it out of the response that is returned, or just call 'BoxView.session_id'.
+After successfully generating a session, the session id will be available. You can either parse it out of the response that is returned, or just call `BoxView.session_id`.
 
 ```ruby
 BoxView.document_id = '937778a1a54b4337a5351a78f7188a24'
@@ -198,7 +198,7 @@ BoxView::Session.never_expire
 <a name="view"/>
 #### View
 
-Opens a default browser using the viewer url to view a BoxView converted document. Requires a session_id.
+Opens a default browser using the viewer url to view a BoxView converted document. Requires a `session_id`.
 
 ```ruby
 BoxView::Session.view
@@ -207,7 +207,7 @@ BoxView::Session.view
 <a name="viewerjs_url"/>
 #### ViewerJS URL
 
-This url can be used with viewerjs to display the assets without using the Box iframe or downloading the assets yourself. Requires a session_id.
+This url can be used with viewerjs to display the assets without using the Box iframe or downloading the assets yourself. Requires a `session_id`.
 
 ```ruby
 BoxView::Session.viewerjs_url
@@ -216,7 +216,7 @@ BoxView::Session.viewerjs_url
 <a name="viewer_url"/>
 #### Viewer URL
 
-The url used in the view method. Can be used in an iframe to display the converted document. Requires a session_id.
+The url used in the view method. Can be used in an iframe to display the converted document. Requires a `session_id`.
 
 ```ruby
 BoxView::Session.viewer_url
