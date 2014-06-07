@@ -8,6 +8,28 @@ describe BoxView::Document, '#document_id' do
 
 end
 
+describe BoxView::Document, '#url' do
+  it 'should raise error when url is nil' do
+    BoxView::Document.url = nil
+    expect{BoxView::Document.url}.to raise_error(BoxView::Errors::UrlNotFound)
+  end
+
+  it 'should return url when defined' do
+    BoxView::Document.url = 'http://imgur.com/cats.jpeg'
+    expect(BoxView::Document.url).not_to be_nil
+  end
+end
+
+describe BoxView::Document, '#type' do
+  it 'should raise error when setting with invalid type' do
+    expect{BoxView::Document.type = 'jpeg'}.to raise_error(BoxView::Errors::TypeNotFound)
+  end
+
+  it 'should return when type is valid' do
+    expect(BoxView::Document.type = 'pdf').not_to be_nil
+  end
+end
+
 describe BoxView::Document, '#dimensions' do
 
   it 'should raise error when dimensions are nil' do
@@ -47,7 +69,7 @@ describe BoxView::Document, '#thumbnail_params' do
   end
 end
 describe BoxView::Document, '#create' do
-  xit 'should raise when receiving a 500' do
+  xit 'should raise when receiving a bad request' do
   end
 
   it 'should raise when receiving a bad api key' do

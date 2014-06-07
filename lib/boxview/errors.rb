@@ -108,6 +108,13 @@ module BoxView
       end
     end
 
+    class DurationNotFound < StandardError
+      DURATION_ERROR_MESSAGE = "A Duration must be specified."
+      def initialize
+        super DURATION_ERROR_MESSAGE
+      end
+    end
+
     class SessionIdNotFound < StandardError
       SESSION_ID_ERROR_MESSAGE = "A Session ID must be specified."
       def initialize
@@ -119,6 +126,13 @@ module BoxView
       TYPE_ERROR_MESSAGE = "A type must be specified."
       def initialize
         super TYPE_ERROR_MESSAGE
+      end
+    end
+
+    class UrlNotFound < StandardError
+      URL_ERROR_MESSAGE = "A url must be specified."
+      def initialize
+        super URL_ERROR_MESSAGE
       end
     end
 
