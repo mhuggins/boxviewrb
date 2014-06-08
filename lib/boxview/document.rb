@@ -49,12 +49,7 @@ module BoxView
       # Note:
       # => The params may be passed in when calling the function or defined before hand.
       def create(options = {})
-        url options[:url] if options[:url]
-        name options[:name] if options[:name]
-        non_svg options[:non_svg] if options[:non_svg]
-        width options[:width] if options[:width]
-        height options[:height] if options[:height]
-        response = BoxView.post document_path, body: json_data, headers: BoxView.headers
+        response = BoxView.post document_path, body: json_data(options), headers: BoxView.headers
         create_response_handler response
         return response
       end
@@ -104,7 +99,8 @@ module BoxView
       # Description:
       # =>
       # No Params!
-      def delete
+      def delete(options = {})
+        BoxView.document_id = options[:document_id] if options[:document_id]
         response = BoxView.delete "#{document_path}/#{BoxView.document_id}", headers: BoxView.headers
         delete_response_handler response
         return response
@@ -153,7 +149,7 @@ module BoxView
       # =>
       # No Params!
       def document_path
-        "#{BoxView.base_url}#{PATH}"
+        "#{BoxView::BASE_PATH}#{PATH}"
       end
 
       # Description:
@@ -191,7 +187,7 @@ module BoxView
       # => A Document ID must be defined.
       def asset_url
         type = if @type then @type else ZIP end # Defaults to ZIP
-        "#{BoxView.base_url}#{PATH}/#{BoxView.document_id}/content.#{type}"
+        "#{document_path}/#{BoxView.document_id}/content.#{type}"
       end
 
       # Description: Params for retrieving a thumbnail of a certain size
@@ -216,8 +212,15 @@ module BoxView
       # Description:
       # =>
       # No Params!
-      def thumbnail_path
-        "#{PATH}/#{BoxView.document_id}/thumbnail#{thumbnail_params}"
+      # def thumbnail_path
+      #   "#{PATH}/#{BoxView.document_id}/thumbnail#{thumbnail_params}"
+      # end
+
+      # Description:
+      # =>
+      # No Params!
+      def thumbnail_url
+        "#{document_path}/#{BoxView.document_id}/thumbnail#{thumbnail_params}"
       end
 
       private
@@ -235,13 +238,6 @@ module BoxView
         else
           raise BoxView::Errors::ThumbnailGenerationFailed
         end
-      end
-
-      # Description:
-      # =>
-      # No Params!
-      def thumbnail_url
-        "/1/documents/#{BoxView.document_id}/thumbnail#{thumbnail_params}"
       end
 
       # Description:
@@ -323,7 +319,10 @@ module BoxView
       # Description:
       # =>
       # No Params!
-      def json_data
+      def json_data(options = {})
+        options.each do |k,v|
+          send "#{k}=", v if v
+        end
         data = {}
         data[:url] = url
         data[:thumbnails] = dimensions if width && height

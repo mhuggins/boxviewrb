@@ -16,10 +16,6 @@ module BoxView
 
     attr_accessor :api_key, :document_id, :session_id
 
-    def base_url
-      "#{BoxView.base_uri}#{BASE_PATH}"
-    end
-
     # Description:
     # =>
     # No Params!
