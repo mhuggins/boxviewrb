@@ -10,7 +10,7 @@ module BoxView
 
     class << self
 
-      attr_accessor :url, :name, :non_svg, :type, :width, :height, :retry_after#, :filepath
+      attr_accessor :url, :name, :non_svg, :type, :width, :height, :retry_after, :filepath
 
       # Description:
       # => The getter method for the url of a box view compatible file. Look at supported_mimetypes.
@@ -20,6 +20,16 @@ module BoxView
       def url
         raise BoxView::Errors::UrlNotFound if @url.nil?
         @url
+      end
+
+      # Description:
+      # => The getter method for the filepath of a box view compatible file. Look at supported_mimetypes.
+      # No Params!
+      # Note:
+      # => Raises an error if the filepath is nil or does not exist.
+      def filepath
+        raise BoxView::Errors::FilepathNotFound if @filepath.nil? || !File.file?(@filepath)
+        @filepath
       end
 
       # Description:
@@ -67,15 +77,15 @@ module BoxView
 
 
       # Description:
-      # =>
+      # => Uses https://github.com/jwagener/httmultiparty for multipart uploading while still using HTTParty
       # No Params!
       # TODO: Implement
-      # def multipart
-      #   BoxView.base_uri 'https://upload.view-api.box.com'
-      #   response = BoxView.post multipart_path, body: multipart_json_data, headers: @multipart_headers
-      #   response_handler response
-      #   return response
-      # end
+      def multipart(options = {})
+        BoxView.base_uri BoxView::MULTIPART_URI
+        response = BoxView.post document_path, body: multipart_data(options), headers: multipart_headers, detect_mime_type: true
+        multipart_response_handler response
+        return response
+      end
 
       # Description:
       # =>
@@ -137,13 +147,11 @@ module BoxView
       # Description:
       # =>
       # No Params!
-      # def multipart_headers
-      #   raise BoxView::Errors::ApiKeyNotFound if BoxView.api_key.nil?
-      #   {
-      #     'Authorization' => "Token #{BoxView.api_key}",
-      #     'Content-type' => 'multipart/form-data'
-      #   }
-      # end
+      def multipart_headers
+        {
+          'Authorization' => "Token #{BoxView.api_key}"
+        }
+      end
 
       # Description:
       # =>
@@ -151,13 +159,6 @@ module BoxView
       def document_path
         "#{BoxView::BASE_PATH}#{PATH}"
       end
-
-      # Description:
-      # =>
-      # No Params!
-      # def multipart_path
-      #   "#{@multipart_path}#{BoxView::BASE_PATH}#{PATH}"
-      # end
 
       # Description:
       # => A convenience method that contains all of the supported mimetypes of Box View.
@@ -316,6 +317,19 @@ module BoxView
         end
       end
 
+      # Required Params:
+      # => response
+      def multipart_response_handler(response)
+        BoxView.base_uri BoxView::BASE_URI # restores original base_uri
+        if (200..202).include? response.code
+          parsed = JSON.parse response.body
+          document_id = parsed["id"]
+          BoxView.document_id = document_id
+        else
+          #raise
+        end
+      end
+
       # Description:
       # =>
       # No Params!
@@ -325,20 +339,23 @@ module BoxView
         end
         data = {}
         data[:url] = url
-        data[:thumbnails] = dimensions if width && height
         data[:name] = name if name
+        data[:thumbnails] = dimensions if width && height
         data[:non_svg] = non_svg if non_svg
         return data.to_json
       end
 
-      # def multipart_json_data
-      #   data = {}
-      #   data[:thumbnails] = dimensions if width && height
-      #   data[:name] = name if name
-      #   data[:non_svg] = non_svg if non_svg
-      #   data[:file] = File.new(filepath, 'r') if filepath
-      #   return data.to_json
-      # end
+      def multipart_data(options = {})
+        options.each do |k,v|
+          send "#{k}=", v if v
+        end
+        data = {}
+        data[:file] = File.new(filepath, 'r') if filepath
+        data[:name] = name if name
+        data[:thumbnails] = dimensions if width && height
+        data[:non_svg] = non_svg if non_svg
+        return data
+      end
 
     end
   end

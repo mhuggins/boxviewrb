@@ -1,16 +1,20 @@
-require 'httparty'
+require 'httmultiparty'
 
 require_relative 'boxview/document'
 require_relative 'boxview/session'
 require_relative 'boxview/errors'
 
 module BoxView
-  include HTTParty
-  # include HTTMultiParty
+  # include HTTParty
+  include HTTMultiParty
 
-  base_uri 'https://view-api.box.com'
+  BASE_URI = 'https://view-api.box.com'
+
+  MULTIPART_URI = 'https://upload.view-api.box.com'
 
   BASE_PATH = '/1'
+
+  base_uri BASE_URI
 
   class << self
 
@@ -20,11 +24,18 @@ module BoxView
     # =>
     # No Params!
     def headers
-      raise BoxView::Errors::ApiKeyNotFound if @api_key.nil?
       {
-        'Authorization' => "Token #{@api_key}",
+        'Authorization' => "Token #{api_key}",
         'Content-type' => 'application/json'
       }
+    end
+
+    # Description:
+    # =>
+    # No Params!
+    def api_key
+      raise BoxView::Errors::ApiKeyNotFound if @api_key.nil?
+      @api_key
     end
 
     # Description:

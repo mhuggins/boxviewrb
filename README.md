@@ -66,10 +66,10 @@ After making this call the BoxView API if successful will return with a response
 
 ```ruby
 BoxView::Document.url 'http://seriouscatbusiness.com/pussycats.pdf'
-BoxView::Document.name 'pussycats'
-BoxView::Document.non_svg true
-BoxView::Document.width 100
-BoxView::Document.height 100
+BoxView::Document.name = 'pussycats'
+BoxView::Document.non_svg = true
+BoxView::Document.width = 100
+BoxView::Document.height = 100
 BoxView::Document.create
 
 # Alternatively:
@@ -84,7 +84,24 @@ BoxView::Document.create
 <a name="multipart"/>
 #### MultiPart
 
-Coming Soon...
+If you have access to the actual file you want to upload to box, you can directly upload it via a multipart upload. This method requires the path to the file to be specified in order for it to send the file to box. If the filepath does not exist, an error will be thrown.
+
+```ruby
+BoxView::Document.filepath = '/Documents/sample.docx'
+BoxView::Document.name = 'pussycats'
+BoxView::Document.non_svg = true
+BoxView::Document.width = 100
+BoxView::Document.height = 100
+BoxView::Document.multipart
+
+# Alternatively:
+BoxView::Document.multipart
+  filepath: '/Documents/sample.docx',
+  name: 'chimpanzee',
+  non_svg: true,
+  width: 100,
+  height: 100
+```
 
 <a name="list"/>
 #### List
