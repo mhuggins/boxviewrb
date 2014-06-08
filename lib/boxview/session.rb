@@ -47,7 +47,7 @@ module BoxView
       # =>
       # No Params!
       def session_path
-        "#{BoxView.base_url}#{PATH}"
+        "#{BoxView::BASE_PATH}#{PATH}"
       end
 
       # Description:
