@@ -8,16 +8,20 @@ module BoxView
       attr_accessor :expiration_date, :duration, :retry_after, :is_downloadable
 
       # Description:
-      # =>
+      # => The getter method for the duration that a session will last.
       # No Params!
+      # Note:
+      # => Raises an error if the duration is nil when retrieved.
       def duration
         raise BoxView::Errors::DurationNotFound if @duration.nil?
         @duration
       end
 
       # Description:
-      # =>
+      # => The getter method for the expiration date that a session will last.
       # No Params!
+      # Note:
+      # => Raises an error if the expiration date is nil when retrieved.
       def expiration_date
         raise BoxView::Errors::ExpirationDateNotFound if @expiration_date.nil?
         @expiration_date
@@ -44,7 +48,7 @@ module BoxView
       ### END Session HTTP Request ###
 
       # Description:
-      # =>
+      # => A path that is used for all session related requests.
       # No Params!
       def session_path
         "#{BoxView::BASE_PATH}#{PATH}"
@@ -100,7 +104,7 @@ module BoxView
       private
 
       # Description:
-      # =>
+      # => Response handler for the create request of a session.
       # No Params!
       def response_handler(response)
         case response.code
@@ -118,7 +122,7 @@ module BoxView
       end
 
       # Description:
-      # =>
+      # => The JSON data that is sent in the create request of a session.
       # No Params!
       def json_data # Does a duration or an expiration date need to exist?
         data = {}

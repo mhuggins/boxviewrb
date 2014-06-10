@@ -219,8 +219,9 @@ module BoxView
       private
 
       # Description:
-      # =>
-      # No Params!
+      # => Response Handler for the thumbnail request
+      # Required Params:
+      # => response
       def thumbnail_response_handler(response)
         case response.code
         when 200 # Valid thumbnail
@@ -234,9 +235,9 @@ module BoxView
       end
 
       # Description:
-      # =>
+      # => Response Handler for the delete request
       # Required Params:
-      # =>
+      # => response
       def delete_response_handler(response)
         case response.code
         when 200
@@ -246,9 +247,9 @@ module BoxView
       end
 
       # Description:
-      # =>
+      # => Response Handler for the asset request
       # Required Params:
-      # =>
+      # => response
       def asset_response_handler(response)
         case response.code
         when 200
@@ -258,9 +259,9 @@ module BoxView
       end
 
       # Description:
-      # =>
+      # => Response Handler for the show request
       # Required Params:
-      # =>
+      # => response
       def show_response_handler(response)
         case response.code
         when 200
@@ -270,9 +271,9 @@ module BoxView
       end
 
       # Description:
-      # =>
+      # => Response Handler for the list request
       # Required Params:
-      # =>
+      # => response
       def list_response_handler(response)
         case response.code
         when 200
@@ -282,9 +283,9 @@ module BoxView
       end
 
       # Description:
-      # =>
+      # => Response Handler for the create request
       # Required Params:
-      # =>
+      # => response
       def create_response_handler(response)
         if (200..202).include? response.code
           parsed = JSON.parse response.body
@@ -296,9 +297,9 @@ module BoxView
       end
 
       # Description:
-      # =>
+      # => Response Handler for the update request
       # Required Params:
-      # =>
+      # => response
       def update_response_handler(response)
         if (200..202).include? response.code
           parsed = JSON.parse response.body
@@ -310,7 +311,7 @@ module BoxView
       end
 
       # Description:
-      # =>
+      # => Response Handler for the multipart request
       # Required Params:
       # => response
       def multipart_response_handler(response)
