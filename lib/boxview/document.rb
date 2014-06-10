@@ -233,7 +233,7 @@ module BoxView
         case response.code
         when 200 # Valid thumbnail
         when 202 # Thumbnail isn't ready yet
-          retry_after response['Retry-After']
+          retry_after = response['Retry-After']
         when 400 # Width/Height are invalid
           raise BoxView::Errors::ThumbnailInvalidWidthHeight
         else
@@ -249,7 +249,7 @@ module BoxView
         case response.code
         when 200
         else
-          # raise
+          raise BoxView::Errors::DocumentDeletionFailed.new(response)
         end
       end
 
@@ -326,7 +326,7 @@ module BoxView
           document_id = parsed["id"]
           BoxView.document_id = document_id
         else
-          #raise
+          raise BoxView::Errors::DocumentNotUpdated.new(response)
         end
       end
 

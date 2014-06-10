@@ -34,6 +34,13 @@ module BoxView
       end
     end
 
+    class DocumentDeletionFailed < StandardError
+      DOCUMENT_DELETE_ERROR_MESSAGE = "Could not delete document."
+      def initialize(response = nil)
+        super "#{DOCUMENT_DELETE_ERROR_MESSAGE} - Response Code: #{response.code}"
+      end
+    end
+
     class DocumentFetchFailed < StandardError
       DOCUMENT_ERROR_MESSAGE = "Could not fetch document."
       def initialize(response = nil)
