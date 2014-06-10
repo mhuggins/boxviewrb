@@ -65,8 +65,9 @@ module BoxView
       end
 
       # Description:
-      # =>
-      # No Params!
+      # => Allows metadata, specifically the name of a document to be updated. Requires a document id.
+      # Optional Params:
+      # => Name, Document ID
       def update(options = {})
         name options[:name] if options[:name]
         BoxView.document_id = options[:document_id] if options[:document_id]
@@ -79,16 +80,16 @@ module BoxView
       # Description:
       # => Uses https://github.com/jwagener/httmultiparty for multipart uploading while still using HTTParty
       # No Params!
-      # TODO: Implement
       def multipart(options = {})
         BoxView.base_uri BoxView::MULTIPART_URI
+        multipart_headers = BoxView.headers.except('Content-type')
         response = BoxView.post document_path, body: multipart_data(options), headers: multipart_headers, detect_mime_type: true
         multipart_response_handler response
         return response
       end
 
       # Description:
-      # =>
+      # => This request will list all the current documents that were uploaded to box view by api key.
       # No Params!
       def list
         response = BoxView.get document_path, headers: BoxView.headers
@@ -97,7 +98,7 @@ module BoxView
       end
 
       # Description:
-      # =>
+      # => Returns the box view object for a specific document. Requires a document id.
       # No Params!
       def show(options = {})
         BoxView.document_id = options[:document_id] if options[:document_id]
@@ -107,8 +108,10 @@ module BoxView
       end
 
       # Description:
-      # =>
-      # No Params!
+      # => Delete a document from box view given a document id.
+      # No Required Params!
+      # Optional Params:
+      # => Document ID
       def delete(options = {})
         BoxView.document_id = options[:document_id] if options[:document_id]
         response = BoxView.delete "#{document_path}/#{BoxView.document_id}", headers: BoxView.headers
@@ -120,19 +123,24 @@ module BoxView
       # =>
       # No Params!
       # Description:
-      # =>
-      # No Params!
+      # => Returns a pdf or zip representation of a document that has previously been uploaded to box view. Requires a document id.
+      # No Required Params!
+      # Optional Params:
+      # => Type, Document ID
       def assets(options = {})
         BoxView.document_id = options[:document_id] if options[:document_id]
-        type options[:type] if options[:type]
+        type = options[:type] if options[:type]
         response = BoxView.get asset_url, headers: BoxView.headers
         asset_response_handler response
         return response
       end
 
       # Description:
-      # =>
-      # No Params!
+      # => Returns a thumbnail image representation of a document that has previously been uploaded to box view. Requires a document id.
+      # => Inform BoxView early by specifying width and height when creating the document.
+      # No Required Params!
+      # Optional Params:
+      # => Width, Height, Document ID
       def thumbnail(options = {})
         BoxView.document_id = options[:document_id] if options[:document_id]
         width options[:width] if options[:width]
@@ -145,16 +153,7 @@ module BoxView
       ### END Document HTTP Requests ###
 
       # Description:
-      # =>
-      # No Params!
-      def multipart_headers
-        {
-          'Authorization' => "Token #{BoxView.api_key}"
-        }
-      end
-
-      # Description:
-      # =>
+      # => A path that is used for all document related requests.
       # No Params!
       def document_path
         "#{BoxView::BASE_PATH}#{PATH}"
@@ -211,14 +210,7 @@ module BoxView
       end
 
       # Description:
-      # =>
-      # No Params!
-      # def thumbnail_path
-      #   "#{PATH}/#{BoxView.document_id}/thumbnail#{thumbnail_params}"
-      # end
-
-      # Description:
-      # =>
+      # => Path to request thumbnail generation for a specific document. Requires document id, width and height.
       # No Params!
       def thumbnail_url
         "#{document_path}/#{BoxView.document_id}/thumbnail#{thumbnail_params}"
@@ -317,6 +309,8 @@ module BoxView
         end
       end
 
+      # Description:
+      # =>
       # Required Params:
       # => response
       def multipart_response_handler(response)
@@ -331,8 +325,10 @@ module BoxView
       end
 
       # Description:
-      # =>
-      # No Params!
+      # => The JSON that is sent in document creation requests.
+      # No Required Params!
+      # Optional Params:
+      # => URL, Name, Width, Height, non_svg
       def json_data(options = {})
         options.each do |k,v|
           send "#{k}=", v if v
@@ -345,6 +341,11 @@ module BoxView
         return data.to_json
       end
 
+      # Description:
+      # => The hash that is sent in document multipart requests.
+      # No Required Params!
+      # Optional Params:
+      # => Filepath, Name, Width, Height, non_svg
       def multipart_data(options = {})
         options.each do |k,v|
           send "#{k}=", v if v
