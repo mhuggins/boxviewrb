@@ -1,6 +1,6 @@
 # boxviewrb
 
-A BoxView API wrapper. Built using the power of HTTParty to communicate with the BoxView API. The BoxView API has added some new features and improved documentation, this lib takes care of all of those new additions for you. You can learn more at the [developer page](http://developers.box.com/view/). Note this product and API are still in beta, and likely to change in the future. BoxViewRb works with all available requests that are documented by BoxView at the time of writing.
+A BoxView API wrapper. Built using the power of HTTParty to communicate with the BoxView API. The BoxView API has added some new features and improved documentation, this lib takes care of all of those new additions for you. You can learn more at the [developer page](http://developers.box.com/view/). Note this product and API are still in beta, and likely to change in the future. Boxviewrb works with all available requests that are documented by BoxView at the time of writing.
 
 ##### Table of Contents
 * [Installation](#installation)
@@ -51,7 +51,7 @@ Or install it yourself as:
 Defining an api key is the only required configuration. To get your own API Key, visit Box.com and get a developer account. Then create a new Box View application. Scroll to the bottom of the application settings page to find your api key.
 
 ```ruby
-BoxView.api_key = 'gyheecmm6ckk8jutlowlzfh2tbg72kck'
+BoxView.api_key = "#{BOXVIEW_APIKEY}" # It will look like: 'gyheecmm6ckk8jutlowlzfh2tbg72kck'
 ```
 
 <a name="document"/>
@@ -60,9 +60,9 @@ BoxView.api_key = 'gyheecmm6ckk8jutlowlzfh2tbg72kck'
 <a name="create_document"/>
 #### Create
 
-See below for how to create a document using BoxViewRb. Not all the paramaters used are required. The url is the only parameter that will be necessary in order to make a successful call with the BoxView API. Name refers to the name of the document. Non_SVG refers to whether you want to support browsers that cannot support svg. The Height and Width parameters refer to the size of a thumbnail that will give Box an early start to generating your thumbnail for you. You must still make a second request for a thumbnail, but it will be made available sooner upon request.
+See below for how to create a document using boxviewrb. Not all the paramaters used are required. The url is the only parameter that will be necessary in order to make a successful call with the BoxView API. Name refers to the name of the document. Non_SVG refers to whether you want to support browsers that cannot support svg. The Height and Width parameters refer to the size of a thumbnail that will give Box an early start to generating your thumbnail for you. You must still make a second request for a thumbnail, but it will be made available sooner upon request.
 
-After making this call the BoxView API if successful will return with a response. The response will contain a document id that you can use to make various other calls. BoxViewRb will automatically have the document id available when the response is returned. If the call to BoxView fails, a specific error will be raised depending on what went wrong.
+After making this call the BoxView API if successful will return with a response. Boxviewrb will automatically have the document id available when the response is returned, call `BoxView.document_id` to retrieve it. If the call to BoxView fails, a specific error will be raised depending on what went wrong.
 
 ```ruby
 BoxView::Document.create
@@ -231,4 +231,4 @@ Vincent Taverna, vinny@getlua.com, [vinnymac.github.io](http://vinnymac.github.i
 <a name="license"/>
 ## License
 
-BoxViewRb is available under the MIT license. See the [LICENSE](LICENSE.txt) file for more information.
+boxviewrb is available under the MIT license. See the [LICENSE](LICENSE.txt) file for more information.
