@@ -48,7 +48,7 @@ Or install it yourself as:
 <a name="configuration"/>
 ### Configuration
 
-Defining an api key is the only required configuration. To get your own API Key, visit Box.com and get a developer account. Then create a new Box View application. Scroll to the bottom of the application settings page to find your api key.
+Defining an api key is the only required configuration. To get your own API Key, visit [Box and get a developer account](https://app.box.com/developers/services). Then create a new Box View application. Scroll to the bottom of the application settings page to find your api key.
 
 ```ruby
 BoxView.api_key = "#{BOXVIEW_APIKEY}" # Example: 'gyheecmm6ckk8jutlowlzfh2tbg72kck'
