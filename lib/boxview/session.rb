@@ -33,9 +33,9 @@ module BoxView
       # => document id must be defined.
       def create(options = {})
         BoxView.document_id = options[:document_id] if options[:document_id]
-        duration options[:duration] if options[:duration]
-        expiration_date options[:expiration_date] if options[:expiration_date]
-        is_downloadable options[:is_downloadable] if options[:is_downloadable]
+        duration = options[:duration] if options[:duration]
+        expiration_date = options[:expiration_date] if options[:expiration_date]
+        is_downloadable = options[:is_downloadable] if options[:is_downloadable]
         response = BoxView.post session_path, body: json_data, headers: BoxView.headers
         response_handler response
         return response
