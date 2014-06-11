@@ -12,6 +12,7 @@ A BoxView API wrapper. Built using the power of HTTParty to communicate with the
         * [List](#list)
         * [Show](#show)
         * [Update](#update)
+        * [Delete](#delete)
         * [Thumbnail](#thumbnail)
         * [Assets](#assets)
     * [Session](#session)
@@ -126,6 +127,17 @@ Required: `document_id`, `name`
 BoxView::Document.update
   document_id: '937778a1a54b4337a5351a78f7188a24',
   name: 'recipes'
+```
+
+<a name="delete"/>
+#### Delete
+
+Removes a previously created document from the Box View servers. This request is destructive.
+
+Required: `document_id`
+
+```ruby
+BoxView::Document.delete document_id: '937778a1a54b4337a5351a78f7188a24'
 ```
 
 <a name="thumbnail"/>
