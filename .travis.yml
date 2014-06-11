@@ -1,4 +1,6 @@
 language: ruby
+# BoxView API Key
+secure: "G+bXUR1HcHzq6YoJwX34jh2LYCuIr/6N7nm2jQxfcUTo9LHpO+8xrCLWPGMiEPp1DOIHYbxL5Me6IJHZeQh2Z4Oh0EtyCN+3knXmEb6OZkR1UGKCi6MhROFn/TSqm768JchDGfVo8Z5FhVKzrGPgVmJTKqv7VqGT0coJ8emAyy8="
 rvm:
   - 2.0.0
   - 2.1.0
