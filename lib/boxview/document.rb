@@ -82,7 +82,7 @@ module BoxView
       # No Params!
       def multipart(options = {})
         BoxView.base_uri BoxView::MULTIPART_URI
-        multipart_headers = BoxView.headers.except('Content-type')
+        (multipart_headers = BoxView.headers).delete('Content-type')
         response = BoxView.post document_path, body: multipart_data(options), headers: multipart_headers, detect_mime_type: true
         multipart_response_handler response
         return response
