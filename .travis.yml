@@ -7,8 +7,10 @@ rvm:
   - 2.0.0
   - 2.1.0
 notifications:
-  recipients:
-    - vinny@getlua.com
+  email:
+    recipients:
+      - vinny@getlua.com
+    on_failure: always
 branches:
   only:
     - master
