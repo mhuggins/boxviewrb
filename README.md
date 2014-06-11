@@ -76,7 +76,7 @@ BoxView::Document.create
 <a name="multipart"/>
 #### MultiPart
 
-If you have access to the actual file you want to upload to box, you can directly upload it via a multipart upload. This method requires the path to the file to be specified in order for it to send the file to box. If the filepath does not exist, an error will be thrown.
+If you have access to the actual file you want to upload to box, you can directly upload it via a multipart upload. This method requires the path to the file to be specified in order for it to send the file to box. If the filepath does not exist, an error will be thrown. The other params (name, thumbnail and non_svg) are the same as the create request params.
 
 ```ruby
 BoxView::Document.multipart
