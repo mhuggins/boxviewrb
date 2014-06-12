@@ -1,6 +1,6 @@
 # boxviewrb
 
-[![Build Status](https://magnum.travis-ci.com/getlua/boxviewrb.svg?token=Huix46oxRzp8K3EvAxpb&branch=master)](https://magnum.travis-ci.com/getlua/boxviewrb)
+[![Build Status](https://travis-ci.org/getlua/boxviewrb.svg)](https://travis-ci.org/getlua/boxviewrb)
 
 A BoxView API wrapper. Built using the power of HTTParty to communicate with the BoxView API. The BoxView API has added some new features and improved documentation, this lib takes care of all of those new additions for you. You can learn more at the [developer page](http://developers.box.com/view/). Note this product and API are still in beta, and likely to change in the future. Boxviewrb works with all available requests that are documented by BoxView at the time of writing.
 
