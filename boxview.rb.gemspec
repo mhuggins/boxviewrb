@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["vinnymac@gmail.com"]
   spec.summary       = "Wrapper for the BoxView API"
   spec.description   = "Box View converts PDF and Office documents to HTML thus enabling these files to be easily embedded into web and mobile applications."
-  spec.homepage      = "http://developers.box.com/view/"
+  spec.homepage      = "https://github.com/getlua/boxviewrb"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
