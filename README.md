@@ -1,4 +1,4 @@
-# boxviewrb
+# boxview.rb
 
 [![Build Status](https://travis-ci.org/getlua/boxviewrb.svg)](https://travis-ci.org/getlua/boxviewrb)
 
@@ -35,7 +35,7 @@ A BoxView API wrapper. Built using the power of HTTParty to communicate with the
 
 Add this line to your application's Gemfile:
 
-    gem 'boxviewrb'
+    gem 'boxview.rb'
 
 And then execute:
 
@@ -43,7 +43,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install boxviewrb
+    $ gem install boxview.rb
 
 <a name="usage"/>
 ## Usage
