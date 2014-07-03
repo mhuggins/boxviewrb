@@ -68,7 +68,7 @@ module BoxView
       # => Defaults to using a generated session_id.
       def viewer_url(session_id = nil)
         unless session_id then session_id = BoxView.session_id end
-        "#{session_path}/#{session_id}/view?theme=light"
+        "#{BoxView.base_uri}#{session_path}/#{session_id}/view?theme=light"
       end
 
       # Description:
@@ -80,7 +80,7 @@ module BoxView
       # => Defaults to using a generated session_id.
       def viewerjs_url(session_id = nil)
         unless session_id then session_id = BoxView.session_id end
-        "#{session_path}/#{session_id}/assets"
+        "#{BoxView.base_uri}#{session_path}/#{session_id}/assets"
       end
 
       # Description:
