@@ -69,7 +69,7 @@ module BoxView
       # Optional Params:
       # => Name, Document ID
       def update(options = {})
-        name = options[:name] if options[:name]
+        @name = options[:name] if options[:name]
         BoxView.document_id = options[:document_id] if options[:document_id]
         response = BoxView.put document_path, body: {name: name}.to_json, headers: BoxView.headers
         update_response_handler response
@@ -143,8 +143,8 @@ module BoxView
       # => Width, Height, Document ID
       def thumbnail(options = {})
         BoxView.document_id = options[:document_id] if options[:document_id]
-        width = options[:width] if options[:width]
-        height = options[:height] if options[:height]
+        @width = options[:width] if options[:width]
+        @height = options[:height] if options[:height]
         response = BoxView.get thumbnail_url, headers: BoxView.headers
         thumbnail_response_handler response
         return response
