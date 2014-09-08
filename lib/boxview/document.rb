@@ -254,7 +254,7 @@ module BoxView
         case response.code
         when 200
         else
-          raise BoxView::Errors::AssetGeneratioFailed.new(response)
+          raise BoxView::Errors::AssetGenerationFailed.new(response)
         end
       end
 
