@@ -2,7 +2,7 @@ language: ruby
 env:
   global:
     # BoxView API Key
-    secure: "cOxF+9whdZHoCAxOPX0xiM7X312pRNoMaxHLDsBPaVLnk2kVKEURvJCoLqwhgsh9PVwa8wAXUk/cwUVN43isM3CdoMM4+5bZg18X/kQGM8zltKJCr/AONaBKV8gadVvmwdAsvzrQ/Mj4Qyb7AGJfNKjGPOZL8A0Pl1NypYz06lI="
+    secure: "QFH/gcuFT6bEXiXpAEIzSc+awrXB23dbhD1RUHneBjzHCAhRnTmyiNuXRt/YubOmt26ttEpQ0nh2D+DbW62ozFiaDaD05ho7Z7YgN1N6wvZD2ST+BiYPKVZWu8sTgQZ9ax8i9uTb3t+Ksu4X5g0cGg9vEdPFKC9PlQhEuwH7ojQ="
 rvm:
   - 2.0.0
   - 2.1.0
