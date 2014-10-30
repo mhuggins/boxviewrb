@@ -79,7 +79,7 @@ describe BoxView::Document, '#create' do
   end
 
   context 'when receiving a bad api key' do
-    let(:mock_response) { double('202 Response', { :code => 401 }) }
+    let(:mock_response) { double('401 Response', { :code => 401 }) }
 
     it 'should raise' do
       BoxView.api_key = 'somesortofbadapikey'
