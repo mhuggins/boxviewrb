@@ -69,13 +69,23 @@ describe BoxView::Document, '#thumbnail_params' do
   end
 end
 describe BoxView::Document, '#create' do
+  let(:mock_response) { double('202 Response', { :code => 201, :body => '{"id": "123"}'}) }
+
+  before do
+    allow(BoxView).to receive(:post).and_return(mock_response)
+  end
+
   xit 'should raise when receiving a bad request' do
   end
 
-  it 'should raise when receiving a bad api key' do
-    BoxView.api_key = 'somesortofbadapikey'
-    BoxView::Document.url = 'http://imgur.com/cats.jpeg'
-    expect{BoxView::Document.create}.to raise_error(BoxView::Errors::DocumentIdNotGenerated)
+  context 'when receiving a bad api key' do
+    let(:mock_response) { double('202 Response', { :code => 401 }) }
+
+    it 'should raise' do
+      BoxView.api_key = 'somesortofbadapikey'
+      BoxView::Document.url = 'http://imgur.com/cats.jpeg'
+      expect{BoxView::Document.create}.to raise_error(BoxView::Errors::DocumentIdNotGenerated)
+    end
   end
 
   it 'should return the response when sent a good request (200..202)' do

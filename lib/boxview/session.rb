@@ -113,7 +113,7 @@ module BoxView
           session_id = parsed["id"]
           BoxView.session_id = session_id
         when 202 # Session not ready yet
-          retry_after response['Retry-After']
+          @retry_after = response.headers['retry-after']
         when 400 # An error occurred while converting the document or the document does not exist
           raise BoxView::Errors::DocumentConversionFailed
         else
