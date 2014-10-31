@@ -37,9 +37,9 @@ module BoxView
       # => document id must be defined.
       def create(options = {})
         BoxView.document_id = options[:document_id] if options[:document_id]
-        duration = options[:duration] if options[:duration]
-        expiration_date = options[:expiration_date] if options[:expiration_date]
-        is_downloadable = options[:is_downloadable] if options[:is_downloadable]
+        @duration = options[:duration] if options[:duration]
+        @expiration_date = options[:expiration_date] if options[:expiration_date]
+        @is_downloadable = options[:is_downloadable] if options[:is_downloadable]
         response = BoxView.post session_path, body: json_data, headers: BoxView.headers
         response_handler response
         return response
@@ -58,7 +58,7 @@ module BoxView
       # => Convenience method to make the session last for a thousand years
       # No Params!
       def never_expire
-        expiration_date Time.now + (365.25 * 24 * 60 * 60 * 1000).to_i
+        @expiration_date = Time.now + (365.25 * 24 * 60 * 60 * 1000).to_i
       end
 
       # Description:
@@ -110,10 +110,10 @@ module BoxView
         case response.code
         when 201 # Done converting
           parsed = JSON.parse response.body
-          session_id = parsed["id"]
+          @session_id = parsed["id"]
           BoxView.session_id = session_id
         when 202 # Session not ready yet
-          retry_after response['Retry-After']
+          @retry_after = response.headers['retry-after']
         when 400 # An error occurred while converting the document or the document does not exist
           raise BoxView::Errors::DocumentConversionFailed
         else
