@@ -111,7 +111,7 @@ module BoxView
         when 201 # Done converting
           parsed = JSON.parse response.body
           @session_id = parsed["id"]
-          BoxView.session_id = session_id
+          BoxView.session_id = @session_id
         when 202 # Session not ready yet
           @retry_after = response.headers['retry-after']
         when 400 # An error occurred while converting the document or the document does not exist
