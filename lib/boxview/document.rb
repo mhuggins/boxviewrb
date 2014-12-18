@@ -7,7 +7,7 @@ module BoxView
     PATH = '/documents'
     ZIP = 'zip' # Constant for generating a zip of assets of a document
     PDF = 'pdf' # Constant for generating a pdf of a document
-	ORIGINAL_FORMAT = '' # Constant for fetching the original uploaded file
+    ORIGINAL_FORMAT = '' # Constant for fetching the original uploaded file
 
     class << self
 
