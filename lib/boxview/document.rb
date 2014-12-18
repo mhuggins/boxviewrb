@@ -130,7 +130,7 @@ module BoxView
       # => Type, Document ID
       def assets(options = {})
         BoxView.document_id = options[:document_id] if options[:document_id]
-        type = options[:type] if options[:type]
+        self.type = options[:type] if options[:type]
         response = BoxView.get asset_url, headers: BoxView.headers
         asset_response_handler response
         return response
@@ -189,7 +189,7 @@ module BoxView
       def asset_url
         type = if @type then @type else ZIP end # Defaults to ZIP
         rtn = "#{document_path}/#{BoxView.document_id}/content"
-		unless @type == ORIGINAL_FORMAT
+		unless type == ORIGINAL_FORMAT
 		  rtn += ".#{type}"
         end
       end
