@@ -189,9 +189,10 @@ module BoxView
       def asset_url
         type = if @type then @type else ZIP end # Defaults to ZIP
         rtn = "#{document_path}/#{BoxView.document_id}/content"
-		unless type == ORIGINAL_FORMAT
-		  rtn += ".#{type}"
+        unless type == ORIGINAL_FORMAT
+          rtn += ".#{type}"
         end
+        rtn
       end
 
       # Description: Params for retrieving a thumbnail of a certain size
