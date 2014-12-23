@@ -7,6 +7,7 @@ module BoxView
     PATH = '/documents'
     ZIP = 'zip' # Constant for generating a zip of assets of a document
     PDF = 'pdf' # Constant for generating a pdf of a document
+    ORIGINAL_FORMAT = '' # Constant for fetching the original uploaded file
 
     class << self
 
@@ -39,7 +40,7 @@ module BoxView
       # Note:
       # => This method only accepts pdf or zip as types.
       def type=(type)
-        raise BoxView::Errors::TypeNotFound if ![ZIP, PDF].include? type.downcase
+        raise BoxView::Errors::TypeNotFound if ![ZIP, PDF, ORIGINAL_FORMAT].include? type.downcase
         @type = type
       end
 
@@ -129,7 +130,7 @@ module BoxView
       # => Type, Document ID
       def assets(options = {})
         BoxView.document_id = options[:document_id] if options[:document_id]
-        type = options[:type] if options[:type]
+        self.type = options[:type] if options[:type]
         response = BoxView.get asset_url, headers: BoxView.headers
         asset_response_handler response
         return response
@@ -187,7 +188,11 @@ module BoxView
       # => A Document ID must be defined.
       def asset_url
         type = if @type then @type else ZIP end # Defaults to ZIP
-        "#{document_path}/#{BoxView.document_id}/content.#{type}"
+        rtn = "#{document_path}/#{BoxView.document_id}/content"
+        unless type == ORIGINAL_FORMAT
+          rtn += ".#{type}"
+        end
+        rtn
       end
 
       # Description: Params for retrieving a thumbnail of a certain size
