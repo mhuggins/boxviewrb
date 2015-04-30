@@ -95,3 +95,15 @@ describe BoxView::Document, '#create' do
     expect(200..202).to cover(response.code)
   end
 end
+describe BoxView::Document, '#delete' do
+  let(:mock_response) { double('204 Response', { :code => 204, :body => '' }) }
+
+  before do
+    allow(BoxView).to receive(:delete).and_return(mock_response)
+  end
+
+  it 'should return an empty string when sent a good request resulting in a 204 (empty) response' do
+    response = BoxView::Document.delete document_id: "xyz"
+    expect(response.body).to eq ''
+  end
+end
