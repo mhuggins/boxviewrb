@@ -246,6 +246,7 @@ module BoxView
       def delete_response_handler(response)
         case response.code
         when 200
+        when 204
         else
           raise BoxView::Errors::DocumentDeletionFailed.new(response)
         end
