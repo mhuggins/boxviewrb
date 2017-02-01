@@ -2,6 +2,7 @@ require 'httmultiparty'
 
 require_relative 'boxview/document'
 require_relative 'boxview/session'
+require_relative 'boxview/webhook'
 require_relative 'boxview/errors'
 
 module BoxView

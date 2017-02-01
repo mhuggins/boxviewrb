@@ -19,6 +19,10 @@ A BoxView API wrapper. Built using the power of HTTParty to communicate with the
         * [Assets](#assets)
     * [Session](#session)
         * [Create](#create-session)
+    * [Webhook](#webhook)
+        * [Create](#create-webhook)
+        * [Get](#view-webhook)
+        * [Delete](#delete-webhook)
     * [Convenience Methods](#convenience-methods)
         * [Never Expire](#never-expire)
         * [View](#create-session)
@@ -175,6 +179,35 @@ BoxView::Session.create
   duration: 100,
   expiration_date: (Time.now + 100.minutes),
   is_downloadable: true
+```
+
+### Webhook
+
+#### Create
+
+Creating a webhook requires a URL that will be used as a the callback URL by the Box View API.
+
+Required: `url`
+
+```ruby
+BoxView::Webhook.create
+  'http://example.com/api/callback?key=123'
+```
+
+#### Get
+
+Request the URL currently being used for webhooks.
+
+```ruby
+BoxView::Webhook.get
+```
+
+#### Delete
+
+Request that the webhook URL used by the API be deleted.
+
+```ruby
+BoxView::Webhook.delete
 ```
 
 ### Convenience Methods

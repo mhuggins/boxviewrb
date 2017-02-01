@@ -143,5 +143,29 @@ module BoxView
       end
     end
 
+    class WebhookFetchFailed < StandardError
+      ERROR_MESSAGE = "Could not fetch webhook settings."
+
+      def initialize(response = nil)
+        super "#{ERROR_MESSAGE} - Response Code: #{response.code}"
+      end
+    end
+
+    class WebhookCreationFailed < StandardError
+      ERROR_MESSAGE = "Could not create webhook settings."
+
+      def initialize(response = nil)
+        super "#{ERROR_MESSAGE} - Response Code: #{response.code}"
+      end
+    end
+
+    class WebhookDeletionFailed < StandardError
+      ERROR_MESSAGE = "Could not delete webhook settings."
+
+      def initialize(response = nil)
+        super "#{ERROR_MESSAGE} - Response Code: #{response.code}"
+      end
+    end
+
   end
 end
